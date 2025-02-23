@@ -21,7 +21,7 @@ const UserContainer = ({isOpen, setIsOpen, form, setForm, setAction, userData, s
       })
   }, [])
   return (
-    <div className='max-w-2xl h-full mx-auto overflow-y-scroll 
+    <div className='max-w-2xl h-full mx-auto overflow-y-scroll no-scrollbar
     flex flex-col gap-5 items-center p-5'>
         {
           userData && userData.map((user, idx) => {

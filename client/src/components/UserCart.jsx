@@ -57,7 +57,7 @@ const UserCart = ({form, setForm, setIsOpen, setAction, userData, setUserData, _
           </p>
           <p className="flex gap-1 items-center">
             <MdOutlineUpdate />
-            updated at <span>{new Date(updatedAt).toLocaleString()}</span>
+            updated at <span>{updatedAt ? new Date(updatedAt).toLocaleString() : new Date(createdAt).toLocaleString()}</span>
           </p>
         </div>
       </div>

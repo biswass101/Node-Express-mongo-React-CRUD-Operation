@@ -30,20 +30,33 @@ const Users = () => {
         if(action === "Add User") {
           axios.post('http://localhost:5000/create', form)
         .then(res => {
+          form.createdAt = new Date().toLocaleString()
           setUserData([...userData, form])
+          // delete form.createdAt  
           toast(res.data.message)
         })
         .catch(err => {
             toast(err.response.data.error)
         })
         } else {
-          axios.put(`http://localhost:5000/update/${form._id}`, {
-           name: form.name,
-           email: form.email,
-           mobile: form.mobile
-          }).then((res) => {
+          const updateData = {
+            name: form.name,
+            email: form.email,
+            mobile: form.mobile,
+           }
+          axios.put(`http://localhost:5000/update/${form._id}`, updateData).then((res) => {
+            userData && userData.map((user) => {
+              if(user._id === form._id) {
+                user.name = form.name
+                user.email = form.email
+                user.mobile = form.mobile
+                user.updatedAt = new Date().toLocaleString()
+              }
+            })
+            setUserData([...userData])
             toast(res.data.message)
             delete form._id
+            delete form.updatedAt
           })
             .catch(err => toast(err.response.data.error))
         }
