@@ -3,7 +3,7 @@ import UserCart from './UserCart'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const UserContainer = ({isOpen, setIsOpen, setAction, userData, setUserData}) => {
+const UserContainer = ({isOpen, setIsOpen, form, setForm, setAction, userData, setUserData}) => {
   useEffect(()=> {
     axios.get('http://localhost:5000')
       .then(res => {
@@ -26,7 +26,7 @@ const UserContainer = ({isOpen, setIsOpen, setAction, userData, setUserData}) =>
         {
           userData && userData.map((user, idx) => {
             return (
-              <UserCart key={idx} setIsOpen = {setIsOpen} setAction = {setAction} {...user} 
+              <UserCart key={idx} form = {form} setForm = {setForm} setIsOpen = {setIsOpen} setAction = {setAction} {...user} 
               userData = {userData} setUserData = {setUserData}/>
             )
           })

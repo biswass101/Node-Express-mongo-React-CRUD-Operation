@@ -6,11 +6,12 @@ import { IoIosTimer } from "react-icons/io";
 import { MdOutlineUpdate } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
-const UserCart = ({ setIsOpen, setAction, userData, setUserData, _id, name, email, mobile, createdAt, updatedAt }) => {
+const UserCart = ({form, setForm, setIsOpen, setAction, userData, setUserData, _id, name, email, mobile, createdAt, updatedAt }) => {
   // console.log(userData)  
   const handleClick = () => {
     setIsOpen(true);
     setAction("Update User")
+    setForm({name, email, mobile, _id})
   };
   const handleUserRemove = () => {
     axios.delete(`http://localhost:5000/delete/${_id}`)

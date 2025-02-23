@@ -22,16 +22,31 @@ const Users = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleAddUser = (e) => {
+  const handleAddUpdateUser = (e) => {
     e.preventDefault()
-    setUserData([...userData, form])
+    
     setIsOpen(false)
     try {
-        axios.post('http://localhost:5000/create', form)
-        .then(res => toast(res.data.message))
+        if(action === "Add User") {
+          axios.post('http://localhost:5000/create', form)
+        .then(res => {
+          setUserData([...userData, form])
+          toast(res.data.message)
+        })
         .catch(err => {
             toast(err.response.data.error)
         })
+        } else {
+          axios.put(`http://localhost:5000/update/${form._id}`, {
+           name: form.name,
+           email: form.email,
+           mobile: form.mobile
+          }).then((res) => {
+            toast(res.data.message)
+            delete form._id
+          })
+            .catch(err => toast(err.response.data.error))
+        }
     } catch (error) {
         toast(error.message)
     }
@@ -51,6 +66,7 @@ const Users = () => {
         {/* Users Containers */}
         <div className="w-full h-[85vh] mt-5">
           <UserContainer
+            form = {form} setForm = {setForm}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             action={action}
@@ -95,7 +111,7 @@ const Users = () => {
               </div>
               <div>
                 <Button
-                  onClick={handleAddUser}
+                  onClick={handleAddUpdateUser}
                   type="submit"
                   variant="contained"
                   color="success"
